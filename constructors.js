@@ -109,9 +109,9 @@ Spellcaster.prototype.isAlive = function(isAlive){
  * @property {boolean} isAlive  Default value should be `true`.
  */
 
-function inflictDamage(health, damage){
+function inflictDamage(damage){
    this.health = health - damage;
-   this.mana = mana - cost;
+   // if (this.health <=0){this.isAlive=false;}else{this.health = health-damage;}
    Spellcaster.call("inflictDamage", 800, 600);
 }
 
@@ -133,6 +133,22 @@ console.log(inflictDamage);
    * @param  {number} damage  Amount of damage to deal to the spellcaster
    */
 
+function spendMana(cost){
+   this.mana = mana - cost;
+   this.spent = true;
+   //if(mana - cost <=0){this.spent = false;}
+   Spellcaster.call("spendMana", health, mana);
+}
+
+spendMana.prototype = Object.create(Spellcaster.prototype,{
+   constructor : {
+      value : Spellcaster
+   }
+});
+
+var spendMana = new Spellcaster("spendMana", 800, 600);
+console.log(spendMana); 
+
   /**
    * Reduces the spellcaster's mana by `cost`.
    * Mana should only be reduced only if there is enough mana to spend.
@@ -141,6 +157,16 @@ console.log(inflictDamage);
    * @param  {number} cost      The amount of mana to spend.
    * @return {boolean} success  Whether mana was successfully spent.
    */
+
+function invoke(spell,target){
+
+
+invoke.prototype = Object.getPrototypeOf(inflictDamage{
+   constructor : {
+      value : Spellcaster
+   }
+});
+}
 
   /**
    * Allows the spellcaster to cast spells.
