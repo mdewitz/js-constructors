@@ -1,20 +1,52 @@
-/**
- * Creates a generic spell that can be cast.
- *
- * @name Spell
- * @param {string} name         The name of the spell.
- * @param {number} cost         The amount needed to cast this spell.
- * @param {string} description  A short description of the spell.
- * @property {string} name
- * @property {number} cost
- * @property {string} description
- */
+function Spell (name, cost, description){
+   this.name = name;
+   this.cost = cost;
+   this.description = description; 
+}
 
-  /**
-   * Print out all spell details and format it nicely.
-   * The format doesnt matter, as long as it contains the spell name, cost, and description.
-   * @name printDetails
-   */
+Spell.prototype.name = function(name){
+   this.name = name;
+   console.log("You've cast", this.name);
+};
+Spell.prototype.cost = function(cost){
+   this.cost = n;
+   console.log("Cost to use spell is", this.cost);
+} ;
+Spell.prototype.description = function(description){
+   this.description = null;
+   console.log(this.name, this.description);
+};
+
+
+ // * Creates a generic spell that can be cast.
+ 
+ // * @name Spell
+ // * @param {string} name         The name of the spell.
+ // * @param {number} cost         The amount needed to cast this spell.
+ // * @param {string} description  A short description of the spell.
+ // * @property {string} name
+ // * @property {number} cost
+ // * @property {string} description
+ // */
+
+ //  /**
+ //   * Print out all spell details and format it nicely.
+ //   * The format doesnt matter, as long as it contains the spell name, cost, and description.
+ //   * @name printDetails
+ //   */
+function DamageSpell(){
+   this.damage = null;
+   Spell.call("DamageSpell", 17, "causes damage");
+}
+
+DamageSpell.prototype = Object.create(Spell.prototype,{
+   constructor : {
+      value : Spell
+   }
+});
+
+var DamageSpell = new Spell("DamageSpell", 17, "causes damage");
+console.log(DamageSpell); 
 
 /**
  * A spell that deals damage.
@@ -41,6 +73,28 @@
  * @property {string} description
  */
 
+function Spellcaster (name, health, mana){
+   this.name = name;
+   this.health = health;
+   this.mana = mana; 
+}
+
+Spellcaster.prototype.name = function(name){
+   this.name = name;
+   console.log("Hello", this.name);
+};
+Spellcaster.prototype.health = function(health){
+   this.health = n;
+   console.log("Your health is", this.health);
+} ;
+Spellcaster.prototype.mana = function(mana){
+   this.mana = n;
+   console.log("Remaining mana is", this.mana);
+};
+Spellcaster.prototype.isAlive = function(isAlive){
+   this.isAlive = true;
+};
+
 /**
  * Now that you've created some spells, let's create
  * `Spellcaster` objects that can use them!
@@ -55,6 +109,20 @@
  * @property {boolean} isAlive  Default value should be `true`.
  */
 
+function inflictDamage(health, damage){
+   this.health = health - damage;
+   this.mana = mana - cost;
+   Spellcaster.call("inflictDamage", 800, 600);
+}
+
+inflictDamage.prototype = Object.create(Spellcaster.prototype,{
+   constructor : {
+      value : Spellcaster
+   }
+});
+
+var inflictDamage = new Spellcaster("inflictDamage", 800, 600);
+console.log(inflictDamage); 
   /**
    * The spellcaster loses health equal to `damage`.
    * Health should never be negative.
