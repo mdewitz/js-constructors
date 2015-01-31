@@ -1,23 +1,3 @@
-function Spell (name, cost, description){
-   this.name = name;
-   this.cost = cost;
-   this.description = description; 
-}
-
-Spell.prototype.name = function(name){
-   this.name = name;
-   console.log("You've cast", this.name);
-};
-Spell.prototype.cost = function(cost){
-   this.cost = n;
-   console.log("Cost to use spell is", this.cost);
-} ;
-Spell.prototype.description = function(description){
-   this.description = null;
-   console.log(this.name, this.description);
-};
-
-
  // * Creates a generic spell that can be cast.
  
  // * @name Spell
@@ -28,25 +8,25 @@ Spell.prototype.description = function(description){
  // * @property {number} cost
  // * @property {string} description
  // */
+function Spell (name, cost, description){
+   this.name = name;
+   this.cost = cost;
+   this.description = description; 
+}
 
  //  /**
  //   * Print out all spell details and format it nicely.
  //   * The format doesnt matter, as long as it contains the spell name, cost, and description.
  //   * @name printDetails
  //   */
-function DamageSpell(name, cost, damage, description){
-   this.damage = null;
-   Spell.call("DamageSpell", 10, 17, "causes damage");
-}
+Spell.prototype.printDetails = function(){
+   console.log(this.name);
+   console.log(this.cost);
+   console.log(this.description);
+};
 
-DamageSpell.prototype = Object.create(Spell.prototype,{
-   constructor : {
-      value : Spell
-   }
-});
-
-var DamageSpell = new Spell("DamageSpell", 10, 17, "causes damage");
-console.log(DamageSpell); 
+//var DamageSpell = new Spell("DamageSpell", 10, 17, "causes damage");
+//console.log(DamageSpell); 
 
 /**
  * A spell that deals damage.
@@ -73,27 +53,29 @@ console.log(DamageSpell);
  * @property {string} description
  */
 
-function Spellcaster (name, health, mana){
-   this.name = name;
-   this.health = health;
-   this.mana = mana; 
+function DamageSpell(name, cost, damage, description){
+   this.damage = damage;
+   Spell.call(this, name, cost, description);
 }
 
-Spellcaster.prototype.name = function(name){
-   this.name = name;
-   console.log("Hello", this.name);
-};
-Spellcaster.prototype.health = function(health){
-   this.health = n;
-   console.log("Your health is", this.health);
-} ;
-Spellcaster.prototype.mana = function(mana){
-   this.mana = n;
-   console.log("Remaining mana is", this.mana);
-};
-Spellcaster.prototype.isAlive = function(isAlive){
-   this.isAlive = true;
-};
+DamageSpell.prototype = Object.create(Spell.prototype,{
+   constructor : {
+      value : Spell
+   }
+});
+
+// Spellcaster.prototype.name = function(name){
+//    this.name = name;
+//    console.log("Hello", this.name);
+// };
+// Spellcaster.prototype.health = function(health){
+//    this.health = n;
+//    console.log("Your health is", this.health);
+// } ;
+// Spellcaster.prototype.mana = function(mana){
+//    this.mana = n;
+//    console.log("Remaining mana is", this.mana);
+// };
 
 /**
  * Now that you've created some spells, let's create
@@ -109,28 +91,16 @@ Spellcaster.prototype.isAlive = function(isAlive){
  * @property {boolean} isAlive  Default value should be `true`.
  */
 
-function inflictDamage(damage){
-   this.damage = damage;
-   this.health = function(life){ 
-      if (health < 0)
-         this.isAlive = false;
-      if (health >=0)
-         this.isAlive = true;
-      health = life;
-   //source: http://stackoverflow.com/questions/1114024/constructors-in-javascript-objects
-   };
-   Spellcaster.call("inflictDamage", 800, 600);
+function Spellcaster (name, health, mana){
+   this.name = name;
+   console.log("Hello", this.name);
+   this.health = health;
+   this.mana = mana; 
+   this.isAlive = true;
 }
 
-inflictDamage.prototype = Object.create(Spellcaster.prototype,{
-   constructor : {
-      value : Spellcaster
-   }
-});
-
-
-var inflictDamage = new Spellcaster("inflictDamage", 800, 600);
-console.log(inflictDamage); 
+// var inflictDamage = new Spellcaster("inflictDamage", 800, 600);
+// console.log(inflictDamage); 
   /**
    * The spellcaster loses health equal to `damage`.
    * Health should never be negative.
@@ -141,28 +111,16 @@ console.log(inflictDamage);
    * @param  {number} damage  Amount of damage to deal to the spellcaster
    */
 
-function spendMana(cost, Returns){
-   this.mana = mana - cost;
-   //this.cost = cost;
-   this.Returns = function (value){
-      if(mana - cost < 0)
-         this.Returns = false;
-      if(mana - cost >= 0) 
-         this.Returns=true;
-      Returns = value;
-   //source: http://stackoverflow.com/questions/1114024/constructors-in-javascript-objects
-   };
-   Spellcaster.call("spendMana", health, mana);
-}
-
-spendMana.prototype = Object.create(Spellcaster.prototype,{
-   constructor : {
-      value : Spellcaster
+Spellcaster.prototype.inflictDamage = function (damage){
+   this.health = this.health-damage;
+   if (this.health<=0) {
+      this.isAlive=false;
+      this.health=0;
    }
-});
+};
 
-var spendMana = new Spellcaster("spendMana", 800, 600);
-console.log(spendMana); 
+// var spendMana = new Spellcaster("spendMana", 800, 600);
+// console.log(spendMana); 
 
   /**
    * Reduces the spellcaster's mana by `cost`.
@@ -172,51 +130,16 @@ console.log(spendMana);
    * @param  {number} cost      The amount of mana to spend.
    * @return {boolean} success  Whether mana was successfully spent.
    */
-   ///////////////////////////////////////////
-function invoke(spell, target, Returns){
-   this.spell = function(type){
-      if (typeof value === DamageSpell)
-         invoke.getPrototypeOf = Object.create(inflictDamage.getPrototypeOf,{
-            constructor : {
-            value : Spellcaster
-            }
-         });
-      if (typeof value != DamageSpell)
-         invoke.getPrototypeOf = Object.create(spendMana.getPrototypeOf,{
-            constructor : {
-               value : Spellcaster
-            }
-         });
-      spell = type;
-   };
-   // this.Spell = if(this.spell = DamageSpell){
-   //    invoke.getPrototypeOf = Object.create(inflictDamage.getPrototypeOf,{
-   //       constructor : {
-   //          value : Spellcaster
-   //       }
-   //    }
-   // } else if(this.spell=Spellcaster){
-   //    invoke.getPrototypeOf = Object.create(spendMana.getPrototypeOf,{
-   //       constructor : {
-   //          value : Spellcaster
-   //       }
-   //    }
-   // };
-   this.target = target;
-   this.Returns = true; 
-}
-
-// invoke.prototype = Object.create(Spellcaster.prototype,{
-//    constructor : {
-//       value : Spellcaster
-//    }
-// });
-
-
-var invoke = new Spellcaster("invoke", 800, 600);
-console.log(invoke); 
-
-   /////////////////////////////////////////
+  
+Spellcaster.prototype.spendMana = function (cost){
+   if(this.mana >= cost){
+      this.mana = this.mana - cost;
+      return true;
+   }
+   else { 
+      return false;
+   }
+};
 
 // var invoke = new Spellcaster("casting spell", "target");
 // invoke.spendMana(200);
@@ -248,3 +171,14 @@ console.log(invoke);
    * @param  {Spellcaster} target         The spell target to be inflicted.
    * @return {boolean}                    Whether the spell was successfully cast.
    */
+
+Spellcaster.prototype.invoke = function (spell, target) {
+   
+   if (this.spell instanceof DamageSpell===true){
+      this.spendMana();
+      this.target(inflictDamage());
+   } 
+   else {
+      return false;
+   }
+};
