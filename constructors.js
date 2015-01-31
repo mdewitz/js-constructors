@@ -20,9 +20,7 @@ function Spell (name, cost, description){
  //   * @name printDetails
  //   */
 Spell.prototype.printDetails = function(){
-   console.log(this.name);
-   console.log(this.cost);
-   console.log(this.description);
+   console.log(this.name + " " + this.cost + " " +this.description);
 };
 
 //var DamageSpell = new Spell("DamageSpell", 10, 17, "causes damage");
@@ -99,8 +97,7 @@ function Spellcaster (name, health, mana){
    this.isAlive = true;
 }
 
-// var inflictDamage = new Spellcaster("inflictDamage", 800, 600);
-// console.log(inflictDamage); 
+
   /**
    * The spellcaster loses health equal to `damage`.
    * Health should never be negative.
@@ -141,11 +138,6 @@ Spellcaster.prototype.spendMana = function (cost){
    }
 };
 
-// var invoke = new Spellcaster("casting spell", "target");
-// invoke.spendMana(200);
-
-// var damage = new Spellcaster("damage spell");
-// damage.inflictDamage(200);
   /**
    * Allows the spellcaster to cast spells.
    * The first parameter should either be a `Spell` or `DamageSpell`.
@@ -173,12 +165,28 @@ Spellcaster.prototype.spendMana = function (cost){
    */
 
 Spellcaster.prototype.invoke = function (spell, target) {
-   
-   if (this.spell instanceof DamageSpell===true){
-      this.spendMana();
-      this.target(inflictDamage());
-   } 
-   else {
+   if (spell === undefined || spell === null){
       return false;
+   }
+
+   if (spell instanceof DamageSpell === true){
+      if(target === undefined || target === null){
+         return false;
+      }
+      if(this.mana>=spell.cost){
+         this.spendMana(spell.cost);
+         target.inflictDamage(spell.damage);
+         return true;
+      }else {
+         return false;
+      }
+
+   } else if (spell instanceof Spell === true) {
+      if(this.mana>=spell.cost){
+         this.spendMana(spell.cost);
+         return true;
+      } else {
+         return false;
+      }
    }
 };
