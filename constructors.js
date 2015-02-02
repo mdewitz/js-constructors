@@ -170,21 +170,25 @@ Spellcaster.prototype.invoke = function (spell, target) {
    }
 
    if (spell instanceof DamageSpell === true){
-      if(target === undefined || target === null){
+      
+      if(target === undefined || target === null || target instanceof Spellcaster === false){
          return false;
       }
+
       if(this.mana>=spell.cost){
          this.spendMana(spell.cost);
          target.inflictDamage(spell.damage);
          return true;
+      
       }else {
          return false;
       }
-
    } else if (spell instanceof Spell === true) {
+      
       if(this.mana>=spell.cost){
          this.spendMana(spell.cost);
          return true;
+      
       } else {
          return false;
       }
